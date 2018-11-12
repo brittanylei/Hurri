@@ -7,19 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-        import android.content.ContentValues;
-        import android.content.Context;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.database.sqlite.SQLiteException;
-        import android.database.sqlite.SQLiteOpenHelper;
-        import android.graphics.Bitmap;
-        import android.util.Log;
-        import android.widget.Toast;
-
-        import java.io.FileInputStream;
-        import java.io.FileNotFoundException;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.util.Log;
+import android.widget.Toast;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class MyDB extends SQLiteOpenHelper {
 
