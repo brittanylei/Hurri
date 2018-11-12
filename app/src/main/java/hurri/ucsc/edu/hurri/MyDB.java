@@ -61,11 +61,6 @@ public class MyDB extends SQLiteOpenHelper {
         return cr;
     }
 
-    // delete function
-    public int deleteID(String s){
-        db = getWritableDatabase();
-        return db.delete(TABLE_NAME, "id = ?", new String[] {s});
-    }
     public int deleteName(String s){
         db = getWritableDatabase();
         return db.delete(TABLE_NAME, "name = ?", new String[] {s});
