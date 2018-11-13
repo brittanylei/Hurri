@@ -16,10 +16,12 @@ public class ViewContactActivity extends AppCompatActivity {
     ArrayList<String> list;
     ListAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_contact);
+
 
         display();
     }

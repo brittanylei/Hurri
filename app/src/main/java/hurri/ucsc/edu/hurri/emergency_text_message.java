@@ -27,7 +27,7 @@ public class emergency_text_message extends Activity implements ActivityCompat.O
         setContentView(R.layout.activity_emergency_text_message);
         snd = findViewById(R.id.Button01);
         tel = findViewById(R.id.EditText01);
-        txt = "Help me!";
+        txt = "Help!";
         snd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
