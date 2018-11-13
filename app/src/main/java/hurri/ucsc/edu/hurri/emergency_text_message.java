@@ -19,7 +19,7 @@ public class emergency_text_message extends Activity implements ActivityCompat.O
 
     private Button snd;
     private EditText tel;
-    private EditText txt;
+    private String txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class emergency_text_message extends Activity implements ActivityCompat.O
         setContentView(R.layout.activity_emergency_text_message);
         snd = findViewById(R.id.Button01);
         tel = findViewById(R.id.EditText01);
-        txt = findViewById(R.id.EditText02);
+        txt = "Help me!";
         snd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +38,7 @@ public class emergency_text_message extends Activity implements ActivityCompat.O
 
     protected void sendMessage() {
         String phoneNo = tel.getText().toString();
-        String message = txt.getText().toString();
+        String message = txt;
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
         if(permissionCheck != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE},0);
