@@ -18,27 +18,20 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CALL = 1 ;
 
     Button btn_emgc_message;
-    Button btn_emgc_calling;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn_emgc_message = (Button) findViewById(R.id.btn_emergency_message);
-        btn_emgc_calling = (Button) findViewById(R.id.btn_emergency_calling);
 
+        makePhoneCall();
         toEmergencyMessage();
-        toEmergencyCalling();
+
     }
 
-    public void toEmergencyCalling(){
-        btn_emgc_calling.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makePhoneCall();
-            }
-        });
-    }
+
     public void toEmergencyMessage(){
         btn_emgc_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 makePhoneCall();
             }
             else {
-                Toast.makeText(this,"Permission denied :(", Toast.LENGTH_SHORT);
+                Toast.makeText(this,"Permission denied :(", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hurri</string>
+    <string name="hurri">Hurri!</string>
+    <string name="message">Message</string>
 </resources>

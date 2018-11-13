@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hurri!"
+        android:text="@string/hurri"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -19,13 +19,7 @@
         android:id="@+id/btn_emergency_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Message"
-        />
-    <Button
-        android:id="@+id/btn_emergency_calling"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Call"
+        android:text="@string/message"
         />
 
 </android.support.constraint.ConstraintLayout>
