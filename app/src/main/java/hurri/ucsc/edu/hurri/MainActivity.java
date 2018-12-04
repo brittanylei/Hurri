@@ -43,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
             if (KeyEvent.ACTION_DOWN == action) {
                 makePhoneCall();
-            } else if (keycode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                if (KeyEvent.ACTION_DOWN == action) {
-                    sendMessage();
-                }
+
+            }
+        } else if (keycode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            if (KeyEvent.ACTION_DOWN == action) {
+                sendMessage();
             }
         }
+
 
         return super.dispatchKeyEvent(event);
     }
@@ -85,13 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CALL) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                makePhoneCall();
-            } else {
-                Toast.makeText(this, "Permission denied :(", Toast.LENGTH_SHORT).show();
-            }
-        }
 
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_SEND_SMS: {
@@ -99,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Permission request successfully", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this, "Permission request failed", Toast.LENGTH_LONG).show();
+                }
+            }
+            case REQUEST_CALL:{
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    makePhoneCall();
+                } else {
+                    Toast.makeText(this, "Permission denied :(", Toast.LENGTH_SHORT).show();
                 }
             }
         }
