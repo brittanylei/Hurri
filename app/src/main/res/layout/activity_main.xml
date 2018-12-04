@@ -7,19 +7,49 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/hurri"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addContacts2" />
+
+
+    <Button
+        android:id="@+id/addContacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="add"
+        android:text="Add Contact"
+        app:layout_constraintBottom_toTopOf="@+id/addContacts2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_emergency_message"
+        android:id="@+id/addContacts2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/message"
-        />
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="view"
+        android:text="View Contacts"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addContacts" />
+
+
+
 
 </android.support.constraint.ConstraintLayout>

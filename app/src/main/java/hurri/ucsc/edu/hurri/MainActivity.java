@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.view.KeyEvent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,9 +17,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CALL = 1 ;
+    private static final int REQUEST_CALL = 1;
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     static MyDB db;
-    Button btn_emgc_message;
 
 
     @Override
@@ -26,24 +27,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = new MyDB(this, "contacts", null, 1);
-        btn_emgc_message = (Button) findViewById(R.id.btn_emergency_message);
-        toEmergencyMessage();
 
     }
 
-
-    public void toEmergencyMessage(){
-        btn_emgc_message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,emergency_text_message.class));
-            }
-        });
-    }
 
     @Override
-    public boolean dispatchKeyEvent(KeyEvent event)
-    {
+    public boolean dispatchKeyEvent(KeyEvent event) {
         int action, keycode;
 
         action = event.getAction();
@@ -54,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
             if (KeyEvent.ACTION_DOWN == action) {
                 makePhoneCall();
+            } else if (keycode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                if (KeyEvent.ACTION_DOWN == action) {
+                    sendMessage();
+                }
             }
         }
 
@@ -64,16 +57,30 @@ public class MainActivity extends AppCompatActivity {
     private void makePhoneCall() {
         String number = "9497356738";
         if (number.length() > 0) {
-           if (ContextCompat.checkSelfPermission(MainActivity.this,
-                   Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) { // phone call permission not yet granted
-               ActivityCompat.requestPermissions(MainActivity.this,
-                       new String[] {Manifest.permission.CALL_PHONE}, REQUEST_CALL );
-           }
-           else { // make the phone call
-               String dial = "tel:" + number;
-               startActivity( new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
-           }
+            if (ContextCompat.checkSelfPermission(MainActivity.this,
+                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) { // phone call permission not yet granted
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+            } else { // make the phone call
+                String dial = "tel:" + number;
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+            }
         }
+    }
+
+    private void sendMessage() {
+        String phoneNo = "5554";
+        String txtMessage = "Help me";
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+
+        } else {
+
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, txtMessage, null, null);
+            Toast.makeText(getApplicationContext(), "SMS sent", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -81,10 +88,33 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CALL) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 makePhoneCall();
+            } else {
+                Toast.makeText(this, "Permission denied :(", Toast.LENGTH_SHORT).show();
             }
-            else {
-                Toast.makeText(this,"Permission denied :(", Toast.LENGTH_SHORT).show();
+        }
+
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission request successfully", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Permission request failed", Toast.LENGTH_LONG).show();
+                }
             }
         }
     }
+
+
+    public void add(View view) {
+        Intent intent = new Intent(this, NewContactActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void view(View view) {
+        Intent intent = new Intent(this, ViewContactActivity.class);
+        startActivity(intent);
+    }
 }
+
+
