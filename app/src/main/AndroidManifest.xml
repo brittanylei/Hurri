@@ -3,9 +3,9 @@
     package="hurri.ucsc.edu.hurri">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".ViewContactActivity" />
         <activity android:name=".NewContactActivity" />
+        <activity android:name=".SetButtonActivity" />
+        <activity android:name=".EditContactActivity"></activity>
     </application>
 
 </manifest>

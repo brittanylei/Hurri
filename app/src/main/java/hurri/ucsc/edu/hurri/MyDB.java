@@ -27,6 +27,11 @@ public class MyDB extends SQLiteOpenHelper {
     private static String TABLE_NAME = "contact_table";
     private static int VERSION = 1;
 
+    private static final String COL1 = "id";
+    private static final String COL2 = "name";
+    private static final String COL3 = "phone";
+
+
 
     public MyDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DB_NAME, null, VERSION);
@@ -61,9 +66,48 @@ public class MyDB extends SQLiteOpenHelper {
         return cr;
     }
 
-    public int deleteName(String s){
+    public Cursor getItemID(String name){
         db = getWritableDatabase();
-        return db.delete(TABLE_NAME, "name = ?", new String[] {s});
+        String query = "SELECT " + COL1 + " FROM " + TABLE_NAME +
+                " WHERE " + COL2 + " = '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+//    public int deleteName(String s){
+//        db = getWritableDatabase();
+//        return db.delete(TABLE_NAME, "name = ?", new String[] {s});
+//    }
+
+
+    public void updateName(String newName, int id, String oldName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL2 +
+                " = '" + newName + "' WHERE " + COL1 + " = '" + id + "'" +
+                " AND " + COL2 + " = '" + oldName + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void updateNumber(String newNumber, int id, String oldNumber){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL3 +
+                " = '" + newNumber + "' WHERE " + COL1 + " = '" + id + "'" +
+                " AND " + COL3 + " = '" + oldNumber + "'";
+//        Log.d(TAG, "updateName: query: " + query);
+//        Log.d(TAG, "updateName: Setting name to " + newName);
+        db.execSQL(query);
+    }
+
+    public void deleteName(int id, String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE "
+                + COL1 + " = '" + id + "'" +
+                " AND " + COL2 + " = '" + name + "'";
+//        Log.d(TAG, "deleteName: query: " + query);
+//        Log.d(TAG, "deleteName: Deleting " + name + " from database.");
+        db.execSQL(query);
     }
 }
 

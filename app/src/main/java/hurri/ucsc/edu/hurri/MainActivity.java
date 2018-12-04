@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     static MyDB db;
 
+    static String vUp = "CALL";
+    static String vDown = "MESSAGE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +45,22 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "HII", Toast.LENGTH_SHORT).show();
 
             if (KeyEvent.ACTION_DOWN == action) {
-                makePhoneCall();
+                if (vUp.equals("CALL")) {
+                    makePhoneCall();
+                }
+                else if (vUp.equals("MESSAGE")) {
+                    sendMessage();
+                }
 
             }
         } else if (keycode == KeyEvent.KEYCODE_VOLUME_DOWN) {
             if (KeyEvent.ACTION_DOWN == action) {
-                sendMessage();
+                if (vDown.equals("CALL")) {
+                    makePhoneCall();
+                }
+                else if (vDown.equals("MESSAGE")) {
+                    sendMessage();
+                }
             }
         }
 
@@ -57,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void makePhoneCall() {
-        String number = "9497356738";
+//        String number = "9497356738";
+        String number = "4157937830";
         if (number.length() > 0) {
             if (ContextCompat.checkSelfPermission(MainActivity.this,
                     Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) { // phone call permission not yet granted
@@ -115,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void view(View view) {
         Intent intent = new Intent(this, ViewContactActivity.class);
+        startActivity(intent);
+    }
+
+    public void setButtons(View view) {
+        Intent intent = new Intent(this, SetButtonActivity.class);
         startActivity(intent);
     }
 }

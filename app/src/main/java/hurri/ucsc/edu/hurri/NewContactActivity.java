@@ -1,5 +1,6 @@
 package hurri.ucsc.edu.hurri;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,10 +24,17 @@ public class NewContactActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.button);
     }
 
+    public void back() {
+        Intent intent = new Intent(NewContactActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
     public void addContact(View view) {
         String s1 = contact_name.getText().toString();
         String s2 = phone_num.getText().toString();
 
         MainActivity.db.insert(s1,s2);
+
+        back();
     }
 }
