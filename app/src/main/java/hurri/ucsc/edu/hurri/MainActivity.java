@@ -3,6 +3,8 @@ package hurri.ucsc.edu.hurri;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         keycode = event.getKeyCode();
 
         if (keycode == KeyEvent.KEYCODE_VOLUME_UP) {
-            Toast.makeText(this, "Calling", Toast.LENGTH_SHORT).show();
 
             if (KeyEvent.ACTION_DOWN == action) {
                 if (vUp.equals("CALL")) {
@@ -80,21 +81,27 @@ public class MainActivity extends AppCompatActivity {
             } else { // make the phone call
                 String dial = "tel:" + number;
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+                Toast.makeText(this, "Calling", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void sendMessage() {
-        String phoneNo = "5554";
-        String txtMessage = "Help me";
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
 
         } else {
-
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNo, null, txtMessage, null, null);
+            Cursor cr = db.get();
+            while (cr.moveToNext()) {
+                String phoneNo = cr.getString(2);
+                String txtMessage = "This is an auto-generated message from an emergency app, do not reply.  I'm in danger. Help!\n" +
+                        "- Sent from Hurri app";
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNo, null, txtMessage, null, null);
+            }
             Toast.makeText(getApplicationContext(), "SMS sent", Toast.LENGTH_LONG).show();
+
         }
 
     }
