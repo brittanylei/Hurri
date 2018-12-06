@@ -143,6 +143,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SetButtonActivity.class);
         startActivity(intent);
     }
+
+    public void openLocation(View view) {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
 }
 
 
