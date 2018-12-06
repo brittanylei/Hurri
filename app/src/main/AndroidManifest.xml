@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hurri.ucsc.edu.hurri">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -37,6 +39,7 @@
         <activity android:name=".NewContactActivity" />
         <activity android:name=".SetButtonActivity" />
         <activity android:name=".EditContactActivity" />
+        <activity android:name=".AudioRecorderActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

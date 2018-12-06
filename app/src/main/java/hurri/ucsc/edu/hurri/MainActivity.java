@@ -127,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void recorder(View view) {
+        Intent intent = new Intent(this, AudioRecorderActivity.class);
+        startActivity(intent);
+    }
 
     public void add(View view) {
         Intent intent = new Intent(this, NewContactActivity.class);
