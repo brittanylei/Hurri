@@ -13,7 +13,7 @@ public class EditContactActivity extends AppCompatActivity {
     private static final String TAG = "EditDataActivity";
 
     private Button btnSave,btnDelete;
-    private EditText editable_item;
+    private EditText editable_item, editable_name;
 
 //    MyDB mDatabaseHelper;
 
@@ -28,6 +28,7 @@ public class EditContactActivity extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btnSave);
         btnDelete = (Button) findViewById(R.id.btnDelete);
         editable_item = (EditText) findViewById(R.id.editable_item);
+        editable_name = (EditText) findViewById(R.id.editable_name);
 
         //get the intent extra from the ListDataActivity
         Intent receivedIntent = getIntent();
@@ -43,15 +44,22 @@ public class EditContactActivity extends AppCompatActivity {
         //set the text to show the current selected name
 //        editable_item.setText(selectedName);
         editable_item.setText(selectedNumber);
+        editable_name.setText(selectedName);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String item = editable_item.getText().toString();
+                String name = editable_name.getText().toString();
                 if(!item.equals("")){
                     MainActivity.db.updateNumber(item,selectedID,selectedNumber);
-                    back();
-                }else{
+                    if(!name.equals("")) {
+                        MainActivity.db.updateName(name, selectedID, selectedName);
+                        back();
+                    }else{
+
+                    }
+                }else {
 
                 }
             }

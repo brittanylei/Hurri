@@ -15,6 +15,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="78dp"
         android:id="@+id/editable_item"/>
+
+    <EditText
+        android:id="@+id/editable_name"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:inputType="textPersonName" />
     <LinearLayout
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
@@ -38,5 +50,7 @@
             android:id="@+id/btnSave"/>
 
     </LinearLayout>
+
+
 
 </RelativeLayout>
