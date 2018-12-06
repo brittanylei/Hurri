@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/amaranth</item>
+        <item>@font/anton</item>
+        <item>@font/chonburi</item>
+        <item>@font/limelight</item>
+        <item>@font/marcellus_sc</item>
+        <item>@font/rozha_one</item>
+        <item>@font/yeseva_one</item>
+    </array>
+</resources>

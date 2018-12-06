@@ -25,6 +25,10 @@
         <activity android:name=".NewContactActivity" />
         <activity android:name=".SetButtonActivity" />
         <activity android:name=".EditContactActivity"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

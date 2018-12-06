@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         keycode = event.getKeyCode();
 
         if (keycode == KeyEvent.KEYCODE_VOLUME_UP) {
-            Toast.makeText(this, "HII", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Calling", Toast.LENGTH_SHORT).show();
 
             if (KeyEvent.ACTION_DOWN == action) {
                 if (vUp.equals("CALL")) {
