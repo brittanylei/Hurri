@@ -1,10 +1,16 @@
 package hurri.ucsc.edu.hurri;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -15,16 +21,32 @@ import android.view.KeyEvent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.io.IOException;
+import java.util.List;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CALL = 1;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     static MyDB db;
+    private FusedLocationProviderClient client;
 
     static String vUp = "CALL";
     static String vDown = "MESSAGE";
+    static Double Latitude;
+    static String SLatitude;
+    static Double Longitude;
+    static String SLongitude;
 
 
     @Override
@@ -33,6 +55,42 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db = new MyDB(this, "contacts", null, 1);
 
+        requestPermission();
+
+        client = LocationServices.getFusedLocationProviderClient(this);
+
+//        Button findLocation = findViewById(R.id.openMaps);
+//        findLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+
+                if(ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                {
+                    return;
+                }
+
+                client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location)
+                    {
+                        if(location != null)
+                        {
+                            Latitude = location.getLatitude();
+                            SLatitude = Double.toString(Latitude);
+                            Longitude = location.getLongitude();
+                            SLongitude = Double.toString(Longitude);
+                            Toast.makeText(MainActivity.this, "Latitude:"+SLatitude+"Longitude:"+SLongitude, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+//            }
+//        });
+    }
+
+    private void requestPermission()
+    {
+        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
     }
 
 
@@ -48,8 +106,7 @@ public class MainActivity extends AppCompatActivity {
             if (KeyEvent.ACTION_DOWN == action) {
                 if (vUp.equals("CALL")) {
                     makePhoneCall();
-                }
-                else if (vUp.equals("MESSAGE")) {
+                } else if (vUp.equals("MESSAGE")) {
                     sendMessage();
                 }
 
@@ -58,8 +115,7 @@ public class MainActivity extends AppCompatActivity {
             if (KeyEvent.ACTION_DOWN == action) {
                 if (vDown.equals("CALL")) {
                     makePhoneCall();
-                }
-                else if (vDown.equals("MESSAGE")) {
+                } else if (vDown.equals("MESSAGE")) {
                     sendMessage();
                 }
             }
@@ -96,15 +152,20 @@ public class MainActivity extends AppCompatActivity {
             while (cr.moveToNext()) {
                 String phoneNo = cr.getString(2);
                 String txtMessage = "This is an auto-generated message from an emergency app, do not reply.  I'm in danger. Help!\n" +
-                        "- Sent from Hurri app";
+                        "- Sent from Hurri app\n";
+                String txtLocation = "https://maps.google.com/?q="+SLatitude+","+SLongitude;
+//                String txtMessage = "This is an auto-generated message from an emergency app, do not reply.  I'm in danger. Help!\n" +
+//                        "- Sent from Hurri app\n" + "https://www.google.co.id/maps/@37,-122";
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(phoneNo, null, txtMessage, null, null);
+                smsManager.sendTextMessage(phoneNo, null, txtLocation, null, null);
             }
             Toast.makeText(getApplicationContext(), "SMS sent", Toast.LENGTH_LONG).show();
 
         }
 
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -117,11 +178,11 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Permission request failed", Toast.LENGTH_LONG).show();
                 }
             }
-            case REQUEST_CALL:{
+            case REQUEST_CALL: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     makePhoneCall();
                 } else {
-                    Toast.makeText(this, "Permission denied :(", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Permission denied :(", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -145,11 +206,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setButtons(View view) {
         Intent intent = new Intent(this, SetButtonActivity.class);
-        startActivity(intent);
-    }
-
-    public void openLocation(View view) {
-        Intent intent = new Intent(this, LocationActivity.class);
         startActivity(intent);
     }
 }
